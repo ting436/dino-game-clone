@@ -27,17 +27,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts?$/,
-        include: path.resolve(__dirname, 'src'),
-        loader: 'ts-loader'
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        }
       }
     ]
   },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
   devServer: {
-    static: path.resolve(__dirname, 'build'),
+    contentBase: path.resolve(__dirname, 'build'),
     compress: true,
     port: 8080,
   },
@@ -52,10 +51,10 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'assets/**/*'),
-          to: path.resolve(__dirname, 'build')
+          from: path.resolve(__dirname, 'assets'),
+          to: path.resolve(__dirname, 'build/assets')
         }
-      ]
+      ],
     })
-  ]
+  ],
 };
