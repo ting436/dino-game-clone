@@ -1,18 +1,16 @@
-import { GameScene } from "../scenes/GameScene";
+import GameScene from "../scenes/GameScene";
 
 
 export class Player extends Phaser.Physics.Arcade.Sprite{
 
-    cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-    scene: GameScene;
-    jumpSound: Phaser.Sound.HTML5AudioSound;
-    hitSound: Phaser.Sound.HTML5AudioSound;
-
-    constructor(scene: GameScene, x: number, y: number) {
-        super(scene, x, y , "dino-run");
+    constructor(scene, x, y) {
+        super('GameScene', x, y , "dino-run");
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
+
+        this.jumpSound = null;
+        this.hitSound = null;
 
         this.init();
 
@@ -39,7 +37,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
         const isDownJustDown = Phaser.Input.Keyboard.JustDown(down);
         const isDownJustUp = Phaser.Input.Keyboard.JustUp(down);
 
-        const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor();
+        const onFloor = (this.body).onFloor();
 
         if (isSpaceJustDown && onFloor) {
             this.setVelocityY(-1600);
@@ -92,8 +90,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite{
     }
 
     registerSounds() {
-        this.jumpSound = this.scene.sound.add("jump", {volume: 0.3}) as Phaser.Sound.HTML5AudioSound;
-        this.hitSound = this.scene.sound.add("hit", {volume: 0.3}) as Phaser.Sound.HTML5AudioSound;
+        this.jumpSound = this.scene.sound.add("jump", {volume: 0.3});
+        this.hitSound = this.scene.sound.add("hit", {volume: 0.3});
     }
 
     die() {

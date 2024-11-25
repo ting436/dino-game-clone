@@ -8,7 +8,7 @@ export const PRELOAD_CONFIG = {
   birdsCount: 1
 }
 
-const config: Phaser.Types.Core.GameConfig = {
+const config = {
   type: Phaser.AUTO,
   width: 1000,
   height: 340,

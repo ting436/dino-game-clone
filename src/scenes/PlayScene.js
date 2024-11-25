@@ -1,35 +1,34 @@
 import { PRELOAD_CONFIG } from "..";
 import { Player } from "../entities/Player";
-import { SpriteWithDynamicBody } from "../types";
 import { GameScene } from "./GameScene";
 
 class PlayScene extends GameScene {
 
-    player: Player;
-    ground: Phaser.GameObjects.TileSprite;
-    startTrigger: SpriteWithDynamicBody;
-    obstacles: Phaser.Physics.Arcade.Group;
-    clouds: Phaser.GameObjects.Group;
-
-    highScoreText: Phaser.GameObjects.Text;
-    scoreText: Phaser.GameObjects.Text;
-    gameOverContainer: Phaser.GameObjects.Container;
-    gameOverText: Phaser.GameObjects.Image;
-    restartText: Phaser.GameObjects.Image;
-
-    score: number = 0;
-    scoreInterval: number = 100;
-    scoreDeltaTime: number = 0;
-
-    spawnInterval: number = 1500;
-    spawnTime: number = 0;
-    gameSpeed: number = 15;
-    gameSpeedModifier: number = 1;
-
-    progressSound: Phaser.Sound.HTML5AudioSound;
 
     constructor() {
         super("PlayScene");
+                
+        this.player = null;
+        this.ground = null;
+        this.startTrigger = null;
+        this.obstacles = null;
+        this.clouds = null;
+
+        this.highScoreText = null;
+        this.scoreText = null;
+        this.gameOverContainer = null;
+        this.gameOverText = null;
+        this.restartText = null;
+
+        this.progressSound = null;
+        this.score = 0;
+        this.scoreInterval = 100;
+        this.scoreDeltaTime = 0;
+
+        this.spawnInterval = 1500;
+        this.spawnTime = 0;
+        this.gameSpeed = 15;
+        this.gameSpeedModifier = 1;
     }
 
     create() {
@@ -44,10 +43,10 @@ class PlayScene extends GameScene {
         this.handleObstacleCollisions();
         this.handleGameRestart();
 
-        this.progressSound = this.sound.add("progress", {volume: 0.1}) as Phaser.Sound.HTML5AudioSound;
+        this.progressSound = this.sound.add("progress", {volume: 0.1});
     }
 
-    update(time: number, delta: number): void {
+    update(time, delta) {
         if( !this.isGameRunning) { return; }
 
         this.spawnTime += delta;
@@ -89,14 +88,14 @@ class PlayScene extends GameScene {
 
         this.scoreText.setText(score.join(""));
 
-        this.obstacles.getChildren().forEach((obstacle: SpriteWithDynamicBody) => {
+        this.obstacles.getChildren().forEach((obstacle) => {
             if (obstacle.getBounds().right < 0 ) {
                 this.obstacles.remove(obstacle);
             }
         });
 
 
-        this.clouds.getChildren().forEach((cloud: SpriteWithDynamicBody) => {
+        this.clouds.getChildren().forEach((cloud) => {
             if (cloud.getBounds().right < 0 ) {
                 cloud.x = this.gameWidth + 30;
             }
